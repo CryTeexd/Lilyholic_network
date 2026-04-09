@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require("../db");
 
 router.get("/", (req, res) => {
-  const sql = "SELECT * FROM users";
+  const sql = "SELECT id, first_name, last_name, age, gender, username FROM users";
 
   db.query(sql, (err, result) => {
     if (err) {
@@ -19,7 +19,7 @@ router.get("/", (req, res) => {
 
 router.get("/:id", (req, res) => {
   const id = req.params.id;
-  const sql = "SELECT * FROM users WHERE id = ?";
+  const sql = "SELECT id, first_name, last_name, age, gender, username FROM users WHERE id = ?";
 
   db.query(sql, [id], (err, result) => {
     if (err) {
@@ -41,7 +41,7 @@ router.get("/:id", (req, res) => {
 
 router.get("/:id/posts", (req, res) => {
   const id = req.params.id;
-  const sql = "SELECT * FROM posts WHERE user_id = ?";
+  const sql = "SELECT id, title, content, created_at FROM posts WHERE user_id = ?";
 
   db.query(sql, [id], (err, result) => {
     if (err) {

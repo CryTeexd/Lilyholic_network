@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../db");
+const authMiddleware = require("../middleware/auth");
 
-router.get("/", (req, res) => {
+router.get("/", authMiddleware, (req, res) => {
   const sql = `
     SELECT posts.*, users.first_name, users.last_name
     FROM posts
@@ -22,7 +23,7 @@ router.get("/", (req, res) => {
   });
 });
 
-router.get("/:postId", (req, res) => {
+router.get("/:postId", authMiddleware, (req, res) => {
   const postId = req.params.postId;
 
   const sql = `
@@ -50,7 +51,7 @@ router.get("/:postId", (req, res) => {
   });
 });
 
-router.post("/", (req, res) => {
+router.post("/" , authMiddleware, (req, res) => {
   const { userId, title, content } = req.body;
 
   if (!userId || !title || !content) {
@@ -79,7 +80,7 @@ router.post("/", (req, res) => {
   });
 });
 
-router.get("/:postId/comments", (req, res) => {
+router.get("/:postId/comments", authMiddleware, (req, res) => {
   const postId = req.params.postId;
 
   const sql = `
@@ -102,7 +103,7 @@ router.get("/:postId/comments", (req, res) => {
   });
 });
 
-router.post("/:postId/comments", (req, res) => {
+router.post("/:postId/comments", authMiddleware, (req, res) => {
   const postId = req.params.postId;
   const { userId, content } = req.body;
 
@@ -132,7 +133,7 @@ router.post("/:postId/comments", (req, res) => {
   });
 });
 
-router.post("/:postId/like", (req, res) => {
+router.post("/:postId/like", authMiddleware, (req, res) => {
   const postId = req.params.postId;
   const { userId } = req.body;
 
@@ -182,7 +183,7 @@ router.post("/:postId/like", (req, res) => {
   });
 });
 
-router.get("/:postId/likes", (req, res) => {
+router.get("/:postId/likes", authMiddleware, (req, res) => {
   const postId = req.params.postId;
 
   const sql = `

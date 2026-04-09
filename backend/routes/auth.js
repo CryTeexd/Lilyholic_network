@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const SECRET = "key";
 
 router.post("/register", async (req, res) => {
   const { firstName, lastName, age, gender, username, password } = req.body;
@@ -42,13 +44,12 @@ router.post("/register", async (req, res) => {
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
 
-  const sql = "SELECT * FROM users WHERE username = ?";
+  const sql = "SELECT id, username, password FROM users WHERE username = ?";
 
   db.query(sql, [username], async (err, result) => {
     if (err) {
       return res.status(500).json({
-        message: "Database error",
-        error: err
+        message: "Database error"
       });
     }
 
@@ -62,19 +63,25 @@ router.post("/login", (req, res) => {
 
     const match = await bcrypt.compare(password, user.password);
 
-    if (match) {
-      res.json({
-        message: "Login successful",
-        user: {
-          id: user.id,
-          username: user.username
-        }
-      });
-    } else {
-      res.status(401).json({
+    if (!match) {
+      return res.status(401).json({
         message: "Wrong password"
       });
     }
+
+    const token = jwt.sign(
+      {
+        id: user.id,
+        username: user.username
+      },
+      SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.json({
+      message: "Login successful",
+      token
+    });
   });
 });
 
