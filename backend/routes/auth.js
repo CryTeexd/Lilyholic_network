@@ -1,28 +1,81 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const db = require("../db");
+const bcrypt = require("bcrypt");
 
-router.get('/', (req, res) => {
-    res.json({ message: 'Auth route' });
+router.post("/register", async (req, res) => {
+  const { firstName, lastName, age, gender, username, password } = req.body;
+
+  if (!firstName || !lastName || !age || !username || !password) {
+    return res.status(400).json({ message: "Missing required fields" });
+  }
+
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const sql = `
+      INSERT INTO users (first_name, last_name, age, gender, username, password)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `;
+
+    db.query(
+      sql,
+      [firstName, lastName, age, gender, username, hashedPassword],
+      (err, result) => {
+        if (err) {
+          return res.status(500).json({
+            message: "Database error",
+            error: err
+          });
+        }
+
+        res.json({
+          message: "User registered successfully"
+        });
+      }
+    );
+  } catch (err) {
+    res.status(500).json({ message: "Error hashing password" });
+  }
 });
 
-router.post('/register', (req, res) => {
-    const { username, password } = req.body;
+router.post("/login", (req, res) => {
+  const { username, password } = req.body;
 
-    res.json({ 
-        message: "Test registration",
-        username,
-        password
-    });
-});
+  const sql = "SELECT * FROM users WHERE username = ?";
 
-router.post('/login', (req, res) => {
-    const { username, password } = req.body;
+  db.query(sql, [username], async (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Database error",
+        error: err
+      });
+    }
 
-    res.json({
-        message: "Test login",
-        username,
-        password
-    });
+    if (result.length === 0) {
+      return res.status(401).json({
+        message: "User not found"
+      });
+    }
+
+    const user = result[0];
+
+    const match = await bcrypt.compare(password, user.password);
+
+    if (match) {
+      res.json({
+        message: "Login successful",
+        user: {
+          id: user.id,
+          username: user.username
+        }
+      });
+    } else {
+      res.status(401).json({
+        message: "Wrong password"
+      });
+    }
+  });
 });
 
 module.exports = router;
