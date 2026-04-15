@@ -8,33 +8,61 @@
     <title>LilyHolic</title>
 </head>
 <body>
-    <header class="header-main">
-        <div class="header-row">
-            <a href="index.html" class="logo">Ç</a>
-        </div>
-
-        <div class="header-search">
-            <div class="searchbox">                
-                <input type="text">
-            </div>
-        </div>
-
-        <nav class="navbar-boxes">
-            <ul class="navbar-list">
-                <li>Previous 10<a href=""> <img src="" class="navi-icon"></a></li>
-                <li>New message<a href=""> <img src="" class="navi-icon"></a></li>
-                <li>Reload<a href=""></a></li>
-                <li>Next 10<a href=""></a></li>
-            </ul>
-        </nav>
-    </header>
     <main>
+        <section id="login-view">
+            <form id="login-form" method="post">
+                <h2>Login to LilyHolic</h2>
+                <input id="login-username" type="text" placeholder="Username" required>
+                <input id="login-password" type="password" placeholder="Password" required>
+                <p>Don't have an account? Register <a href="#" id="go-to-register">here</a>.</p>
+                <button type="submit">Login</button>
+            </form>
+        </section>
 
+        <section id="register-view" class="hidden">
+            <form id="register-form" method="post">
+                <h2>Register for LilyHolic</h2>
+                <input id="register-first-name" type="text" placeholder="First Name" required>
+                <input id="register-last-name" type="text" placeholder="Last Name" required>
+                <input id="register-age" type="number" placeholder="Age" required>
+                <input id="register-username" type="text" placeholder="Username" required>
+                <input id="register-password" type="password" placeholder="Password" required>
+                <p>Already have an account? Login <a href="#" id="go-to-login">here</a>.</p>
+                <button type="submit">Register</button>
+            </form>
+        </section>
+
+        <section id="app-view" class="hidden">
+            <header>
+                <nav class="navbar">
+                    <ul class="nav-list">
+                        <li><a href="" class="hidden">Login</a></li>
+                        <li><a href="">Register</a></li>
+                        <li><a href="">next 20</a></li>
+                        <li><a href="">new message</a></li>
+                        <li><a href="">reload</a></li>
+                        <li><a href="">previous 20</a></li>
+                        <li>
+                            <form action="" method="get">
+                                <div class="searchbar">
+                                    <input type="text" placeholder="#ID search...">
+                                    <button type="submit">Search</button>
+                                </div>
+                            </form>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+
+            <section id="feed-view">
+                <section id="posts-container"></section>
+            </section>
+        </section>
     </main>
     <footer>
 
     </footer>
 
-
+    <script src="scripts/main.js" type="module"></script>
 </body>
 </html>
