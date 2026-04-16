@@ -13,10 +13,10 @@ html {
 }
 
 body {
-    background-image: url('/source/background_clouds.avif');
+    background-image: url('source/background_clouds.avif');
     background-size: cover;
     background-position: center;
-    /*background-attachment: fixed;*/
+    background-attachment: fixed;
 }
 
 a {
@@ -71,7 +71,7 @@ li{
     padding: 3rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;    
+    width: 320px;    
     margin: 15rem auto;    
 }
 
@@ -109,4 +109,105 @@ li{
 #register-view a, #login-view a{
     color: #1b2767;
     font-weight: bold;
+}
+
+#posts-container {
+    width: 760px;
+    max-width: 90%;
+    margin: 2rem auto 4rem auto;
+}
+
+.post {
+    background-color: rgba(255, 255, 255, 0.35);
+    padding: 2rem 3rem;
+    margin-bottom: 3rem;
+}
+
+.post-small-id {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #5a6470;
+}
+
+.post-title {
+    font-size: 2rem;
+    margin-bottom: 0.4rem;
+    color: #444;
+}
+
+.post-meta {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #1b4e7a;
+    font-weight: bold;
+}
+
+.post-content {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    white-space: pre-line;
+    margin-bottom: 1.5rem;
+}
+
+.post-actions {
+    text-align: right;
+    margin-bottom: 1rem;
+    color: #1b2767;
+    font-weight: bold;
+}
+
+.post-actions a,
+.post-actions button {
+    background: none;
+    border: none;   
+    color: #1b2767;
+    font: inherit;
+    cursor: pointer;
+    margin-left: 1rem;
+}
+
+.post-actions a:hover,
+.post-actions button:hover {
+    text-decoration: underline;
+}
+
+.comments-container {
+    margin-top: 1rem;
+}
+
+.comment {
+    background-color: rgba(255, 255, 255, 0.35);
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.7rem;
+}
+
+.comment-meta {
+    font-weight: bold;
+    color: #1b4e7a;
+    margin-bottom: 0.4rem;
+}
+
+.comment-content {
+    line-height: 1.4;
+}
+
+.comment-form {
+    margin-top: 1rem;
+}
+
+.comment-form textarea {
+    width: 100%;
+    min-height: 90px;
+    padding: 0.6rem;
+    margin-bottom: 0.6rem;
+    resize: vertical;
+}
+
+.comment-form button {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    background-color: #1b2767;
+    color: white;
+    border: 1px solid #1b2767;
+    cursor: pointer;
 }

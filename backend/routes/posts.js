@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require("../db");
 const authMiddleware = require("../mw/auth");
 
-router.get("/", authMiddleware, (req, res) => {
+router.get("/", (req, res) => {
   const sql = `
     SELECT posts.*, users.first_name, users.last_name
     FROM posts
@@ -23,7 +23,7 @@ router.get("/", authMiddleware, (req, res) => {
   });
 });
 
-router.get("/:postId", authMiddleware, (req, res) => {
+router.get("/:postId", (req, res) => {
   const postId = req.params.postId;
 
   const sql = `
@@ -51,10 +51,11 @@ router.get("/:postId", authMiddleware, (req, res) => {
   });
 });
 
-router.post("/" , authMiddleware, (req, res) => {
-  const { userId, title, content } = req.body;
+router.post("/", authMiddleware, (req, res) => {
+  const { title, content } = req.body;
+  const userId = req.user.id;
 
-  if (!userId || !title || !content) {
+  if (!title || !content) {
     return res.status(400).json({
       message: "Missing required fields"
     });
@@ -80,7 +81,7 @@ router.post("/" , authMiddleware, (req, res) => {
   });
 });
 
-router.get("/:postId/comments", authMiddleware, (req, res) => {
+router.get("/:postId/comments", (req, res) => {
   const postId = req.params.postId;
 
   const sql = `
@@ -105,9 +106,10 @@ router.get("/:postId/comments", authMiddleware, (req, res) => {
 
 router.post("/:postId/comments", authMiddleware, (req, res) => {
   const postId = req.params.postId;
-  const { userId, content } = req.body;
+  const { content } = req.body;
+  const userId = req.user.id;
 
-  if (!userId || !content) {
+  if (!content) {
     return res.status(400).json({
       message: "Missing required fields"
     });
@@ -135,13 +137,7 @@ router.post("/:postId/comments", authMiddleware, (req, res) => {
 
 router.post("/:postId/like", authMiddleware, (req, res) => {
   const postId = req.params.postId;
-  const { userId } = req.body;
-
-  if (!userId) {
-    return res.status(400).json({
-      message: "Missing userId"
-    });
-  }
+  const userId = req.user.id;
 
   const checkSql = `
     SELECT * FROM likes
@@ -183,7 +179,7 @@ router.post("/:postId/like", authMiddleware, (req, res) => {
   });
 });
 
-router.get("/:postId/likes", authMiddleware, (req, res) => {
+router.get("/:postId/likes", (req, res) => {
   const postId = req.params.postId;
 
   const sql = `
