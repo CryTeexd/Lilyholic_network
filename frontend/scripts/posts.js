@@ -1,4 +1,4 @@
-import { fetchPosts, fetchComments, fetchLikes, addComment, addLike } from "./api.js";
+import { fetchPosts, fetchComments, fetchLikes, addComment, addLike, createPost } from "./api.js";
 
 export async function loadPosts() {
     const postsContainer = document.getElementById("posts-container");
@@ -124,4 +124,27 @@ function formatDate(dateString) {
     }
 
     return date.toLocaleString();
+}
+
+export function setupNewPostForm(){
+    const newPostForm = document.getElementById("new-post-form");
+    const newPostTitle = document.getElementById("new-post-title");
+
+    newPostForm.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const title = newPostTitle.value;
+        const content = document.getElementById("new-post-content").value;
+
+        const result = await createPost(title, content);
+
+        if (result.message && result.message.toLowerCase().includes("success")) {
+            newPostForm.reset();
+            newPostView.classList.add("hidden");
+        
+            await loadPosts();
+        } else {
+            alert(result.message || "Could not create post");
+        }
+    });
 }

@@ -211,3 +211,35 @@ li{
     border: 1px solid #1b2767;
     cursor: pointer;
 }
+
+#new-post-view {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 2rem;
+    border-radius: 8px;
+    width: 760px;    
+    max-width: 90%;
+    margin: 2rem auto;    
+}
+
+#new-post-form input, #new-post-form textarea {
+    width: 100%;
+    padding: 0.6rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font: inherit;
+}
+
+#new-post-textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+#new-post-form button {
+    padding: 0.6rem 1rem;
+    border-radius: 4px;
+    background-color: #1b2767;
+    color: white;
+    border: 1px solid #1b2767;
+    cursor: pointer;
+}

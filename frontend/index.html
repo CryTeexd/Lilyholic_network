@@ -37,7 +37,7 @@
                     <ul class="nav-list">
                         <li><a href="#" id="logout-link">Logout</a></li>
                         <li><a href="#">next 20</a></li>
-                        <li><a href="#">new message</a></li>
+                        <li><a href="#" id="new-post-link">new message</a></li>
                         <li><a href="#" id="reload-posts">reload</a></li>
                         <li><a href="#">previous 20</a></li>
                         <li>
@@ -51,6 +51,15 @@
                     </ul>
                 </nav>
             </header>
+
+            <section id="new-post-view" class="hidden">
+                <form id="new-post-form">
+                    <h2>New message</h2>
+                    <input type="text" id="new-post-title" placeholder="Title" required>
+                    <textarea id="new-post-content" placeholder="Write your message..." required></textarea>
+                    <button type="submit">Post</button>
+                </form>
+            </section>
 
             <section id="feed-view">
                 <section id="posts-container"></section>

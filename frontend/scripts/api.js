@@ -68,3 +68,18 @@ export async function addLike(postId) {
 
     return await response.json();
 }
+
+export async function createPost(title, content) {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(POSTS_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ title, content })
+    });
+
+    return await response.json();
+}
